@@ -1,10 +1,15 @@
-exports.modifyWebpackConfig = ({ config }, options) => {
-  config.loader(`sass-resources`, {
-    test: /\.s[ac]ss$/,
-    loaders: ['sass-resources']
-  })
-  config.merge({
-    sassResources: options.resources
-  })
-  return config
-}
+exports.onCreateWebpackConfig = ({ actions }, options) => {
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.s[ac]ss$/,
+          loader: "sass-resources-loader",
+          options: {
+            resources: options.resources
+          }
+        }
+      ]
+    }
+  });
+};
